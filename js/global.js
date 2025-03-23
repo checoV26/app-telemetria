@@ -2,7 +2,7 @@ var topicOperacionesPAT = "";
 var topicOperacionesBombas = "";
 var topicAlarmas = "";
 var topicListAlarmas = "";
-var server = "http://localhost:3000/api/";
+var server = "http://asbombeo.ddns.net:3000/api/";
 const dataN = "---------";
 
 $(document).ready(function () {});
