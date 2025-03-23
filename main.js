@@ -6,37 +6,34 @@ const {
   globalShortcut,
 } = require("electron");
 const path = require("path");
+const { autoUpdater } = require("electron-updater");
 
 let mainWindow;
 
 app.whenReady().then(() => {
   const primaryDisplay = screen.getPrimaryDisplay();
-  const { width, height } = primaryDisplay.workAreaSize; // Tamaño sin barra de tareas
+  const { width, height } = primaryDisplay.workAreaSize;
 
   mainWindow = new BrowserWindow({
     width,
     height,
-    icon: path.join(__dirname, "assets", "logo.ico"), // Agregar el icono
+    icon: path.join(__dirname, "assets", "logo.ico"),
     fullscreenable: true,
     webPreferences: {
-      nodeIntegration: false, // Se desactiva por seguridad
-      contextIsolation: true, // Aísla el contexto de ejecución
-      preload: path.join(__dirname, "preload.js"), // Usa un script seguro
+      nodeIntegration: false,
+      contextIsolation: true,
+      preload: path.join(__dirname, "preload.js"),
     },
   });
 
-  // Ajustar el tamaño de la ventana al área de trabajo sin afectar la barra de tareas
   mainWindow.setBounds({ x: 0, y: 0, width, height });
-
   mainWindow.loadFile(path.join(__dirname, "pages", "sign-in.html"));
 
-  // 🛑 Bloquear atajos de teclado para abrir la consola
   globalShortcut.register("CommandOrControl+Shift+I", () => {});
   globalShortcut.register("F12", () => {});
 
-  // 🛑 Evento antes de cerrar la ventana
   mainWindow.on("close", (event) => {
-    mainWindow.webContents.send("clear-localstorage"); // Envía mensaje al Renderer
+    mainWindow.webContents.send("clear-localstorage");
   });
 
   mainWindow.on("closed", () => {
@@ -48,9 +45,12 @@ app.whenReady().then(() => {
       createWindow();
     }
   });
+
+  // Iniciar la verificación de actualizaciones al iniciar la app
+  autoUpdater.checkForUpdatesAndNotify();
 });
 
-// 🛑 Evitar el menú de clic derecho
+// Evitar el menú de clic derecho
 app.on("browser-window-created", (_, window) => {
   window.webContents.on("context-menu", (event) => {
     event.preventDefault();
@@ -61,4 +61,14 @@ app.on("window-all-closed", () => {
   if (process.platform !== "darwin") {
     app.quit();
   }
+});
+
+// Manejo de eventos de actualización
+autoUpdater.on("update-available", () => {
+  console.log("Nueva actualización disponible. Descargando...");
+});
+
+autoUpdater.on("update-downloaded", () => {
+  console.log("Actualización descargada. Instalando...");
+  autoUpdater.quitAndInstall();
 });

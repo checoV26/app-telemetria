@@ -17,8 +17,11 @@
     "electron": "^35.0.2",
     "electron-builder": "^25.1.8"
   },
+  "dependencies": {
+    "electron-updater": "^6.3.9"
+  },
   "build": {
-    "appId": "com.miempresa.telemetria",
+    "appId": "com.asb.telemetria",
     "productName": "Telemetria ASB",
     "directories": {
       "output": "dist"
@@ -26,6 +29,11 @@
     "win": {
       "icon": "assets/icon.ico",
       "target": "nsis"
+    },
+    "publish": {
+      "provider": "github",
+      "owner": "checoV26",
+      "repo": "api-telemetria"
     }
   }
 }
