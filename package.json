@@ -30,6 +30,10 @@
       "icon": "assets/icon.ico",
       "target": "nsis"
     },
+    "linux": {
+      "icon": "assets/icon.png",
+      "target": "AppImage"
+    },
     "publish": {
       "provider": "github",
       "owner": "checoV26",
