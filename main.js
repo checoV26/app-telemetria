@@ -4,44 +4,42 @@ const {
   screen,
   ipcMain,
   globalShortcut,
-  autoUpdater,
 } = require("electron");
 const path = require("path");
+const { autoUpdater } = require("electron-updater");
 
-// URL del repositorio de GitHub para actualizaciones
-const feedURL =
-  "https://github.com/checoV26/api-telemetria/releases/download/v1.0.1/"; // Cambia esto a tu URL de release
+let mainWindow; // Definir la variable correctamente
 
-let mainWindow;
+// Configuración de autoUpdater
+autoUpdater.autoDownload = false;
+autoUpdater.autoInstallOnAppQuit = true;
 
 app.whenReady().then(() => {
   const primaryDisplay = screen.getPrimaryDisplay();
-  const { width, height } = primaryDisplay.workAreaSize; // Tamaño sin barra de tareas
+  const { width, height } = primaryDisplay.workAreaSize;
 
   mainWindow = new BrowserWindow({
     width,
     height,
-    icon: path.join(__dirname, "assets", "logo.ico"), // Agregar el icono
+    icon: path.join(__dirname, "assets", "logo.ico"),
     fullscreenable: true,
     webPreferences: {
-      nodeIntegration: false, // Se desactiva por seguridad
-      contextIsolation: true, // Aísla el contexto de ejecución
-      preload: path.join(__dirname, "preload.js"), // Usa un script seguro
+      nodeIntegration: false,
+      contextIsolation: true,
+      preload: path.join(__dirname, "preload.js"),
     },
   });
 
-  // Ajustar el tamaño de la ventana al área de trabajo sin afectar la barra de tareas
   mainWindow.setBounds({ x: 0, y: 0, width, height });
-
   mainWindow.loadFile(path.join(__dirname, "pages", "sign-in.html"));
 
-  // 🛑 Bloquear atajos de teclado para abrir la consola
+  // Bloquear atajos de teclado
   globalShortcut.register("CommandOrControl+Shift+I", () => {});
   globalShortcut.register("F12", () => {});
 
-  // 🛑 Evento antes de cerrar la ventana
-  mainWindow.on("close", (event) => {
-    mainWindow.webContents.send("clear-localstorage"); // Envía mensaje al Renderer
+  // Evento antes de cerrar la ventana
+  mainWindow.on("close", () => {
+    mainWindow.webContents.send("clear-localstorage");
   });
 
   mainWindow.on("closed", () => {
@@ -54,43 +52,30 @@ app.whenReady().then(() => {
     }
   });
 
-  // Verificar actualizaciones al iniciar
-  autoUpdater.setFeedURL({ url: feedURL });
-  autoUpdater.checkForUpdatesAndNotify();
+  // ✅ Se usa `mainWindow` en lugar de `curWindow`
+  autoUpdater.checkForUpdates();
+  mainWindow.webContents.send("message", `Checking for updates. Current version ${app.getVersion()}`);
 
-  // Actualización: cuando la app se actualiza, se cierra e instala automáticamente
-  autoUpdater.on("checking-for-update", () => {
-    console.log("Comprobando actualizaciones...");
-  });
-
-  autoUpdater.on("update-available", (info) => {
-    console.log("Actualización disponible.");
+  // Manejo de eventos de actualización
+  autoUpdater.on("update-available", () => {
+    mainWindow.webContents.send("message", `Update available. Current version ${app.getVersion()}`);
+    autoUpdater.downloadUpdate();
   });
 
   autoUpdater.on("update-not-available", () => {
-    console.log("No hay actualizaciones disponibles.");
+    mainWindow.webContents.send("message", `No update available. Current version ${app.getVersion()}`);
+  });
+
+  autoUpdater.on("update-downloaded", () => {
+    mainWindow.webContents.send("message", `Update downloaded. Current version ${app.getVersion()}`);
   });
 
   autoUpdater.on("error", (err) => {
-    console.error("Error al buscar actualizaciones:", err);
-  });
-
-  autoUpdater.on("download-progress", (progressObj) => {
-    let log_message = "Velocidad: " + progressObj.bytesPerSecond;
-    log_message = log_message + " - " + progressObj.percent + "% descargado";
-    log_message =
-      log_message + " - " + progressObj.transferred + "/" + progressObj.total;
-    console.log(log_message);
-  });
-
-  autoUpdater.on("update-downloaded", (info) => {
-    console.log("Actualización descargada. Instalando...");
-    // Instalación automática
-    autoUpdater.quitAndInstall();
+    mainWindow.webContents.send("message", `Error: ${err}`);
   });
 });
 
-// 🛑 Evitar el menú de clic derecho
+// Evitar el menú de clic derecho
 app.on("browser-window-created", (_, window) => {
   window.webContents.on("context-menu", (event) => {
     event.preventDefault();

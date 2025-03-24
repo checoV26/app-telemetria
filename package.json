@@ -1,26 +1,21 @@
 {
   "name": "telemetria-asb",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Aplicación de telemetría con Electron.js",
   "main": "main.js",
   "scripts": {
-    "start": "electron-forge start",
-    "package": "electron-forge package",
-    "make": "electron-forge make",
-    "publish": "electron-forge publish"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "electron .",
+    "dist": "electron-builder"
   },
-  "keywords": [],
-  "author": "SMR",
-  "license": "ISC",
-  "type": "commonjs",
-  "devDependencies": {
-    "electron": "^35.0.2",
-    "electron-builder": "^25.1.8",
-    "@electron-forge/publisher-github": "^6.0.0"
+  "repository": "https://github.com/checoV26/app-telemetria",
+  "publish": {
+    "provider": "github",
+    "releaseType": "release"
   },
   "build": {
     "appId": "com.miempresa.telemetria",
-    "productName": "Telemetria ASB",
+    "productName": "Telemetria-ASB",
     "directories": {
       "output": "dist"
     },
@@ -29,19 +24,14 @@
       "target": "nsis"
     }
   },
-  "publishers": [
-    {
-      "name": "@electron-forge/publisher-github",
-      "config": {
-        "repository": {
-          "owner": "checoV26",
-          "name": "api-telemetria"
-        },
-        "prerelease": false,
-        "draft": true
-      }
-    }
-  ],
+  "keywords": [],
+  "author": "SMR",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "electron": "^35.0.2",
+    "electron-builder": "^25.1.8"
+  },
   "dependencies": {
     "electron-updater": "^6.3.9"
   }

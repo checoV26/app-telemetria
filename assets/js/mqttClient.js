@@ -1,13 +1,12 @@
 const MQTTClient = (function () {
-  const brokerUrl =
-    "wss://e703d2db692848f392c838ec5d8e0fbb.s1.eu.hivemq.cloud:8884/mqtt";
+  const brokerUrl = "ws://asbombeo.ddns.net:8083/mqtt";
 
   const options = {
     keepalive: 60, // Mantiene la conexión activa
     reconnectPeriod: 3000, // Tiempo antes de reconectar (3s)
     clientId: "cliente_" + Math.random().toString(16).substr(2, 8), // ID único
-    username: "asbPruebas", // Reemplázalo con tu usuario de HiveMQ Cloud
-    password: "17Zp0050", // Reemplázalo con tu contraseña de HiveMQ Cloud
+    //username: "asbPruebas", // Reemplázalo con tu usuario de HiveMQ Cloud
+    //password: "17Zp0050", // Reemplázalo con tu contraseña de HiveMQ Cloud
   };
 
   const client = mqtt.connect(brokerUrl, options);

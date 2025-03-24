@@ -19,7 +19,7 @@ let sendData = (e) => {
 
   $.ajax({
     type: "POST",
-    url: "http://localhost:3000/api/auth/login",
+    url: "http://asbombeo.ddns.net:3000/api/auth/login",
     data: JSON.stringify(data), // Convertir el objeto en JSON
     contentType: "application/json", // Indicar que estamos enviando JSON
     processData: false,
