@@ -17,6 +17,8 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.17.2/dist/sweetalert2.all.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.17.2/dist/sweetalert2.min.css">
+    <script src="../assets/chart/raphael-2.1.4.min.js"></script>
+    <script src="../assets/chart/justgage.js"></script>
 
     <script src="../assets/js/core/popper.min.js"></script>
     <script src="../assets/js/core/bootstrap.min.js"></script>
@@ -28,6 +30,7 @@
     <script src="../assets/js/mqtt.min.js"></script>
     <script src="../assets/js/mqttClient.js"></script>
     <script src="../js/operationM.js"></script>
+
 </head>
 
 <body class="g-sidenav-show bg-gray-100">
@@ -40,7 +43,8 @@
                 href=" https://demos.creative-tim.com/material-dashboard/pages/dashboard " target="_blank">
                 <img src="../assets/img/logo-ct-dark.png" class="navbar-brand-img" width="26" height="26"
                     alt="main_logo" />
-                <span class="ms-1 text-sm text-dark">Telemetry ASB</span>
+                <span class="ms-1 text-sm text-dark">Telemetry ASB <span class="indicador rojo"
+                        id="statusConecctionAsb"></span></span>
             </a>
         </div>
         <hr class="horizontal dark mt-0 mb-2" />
@@ -192,7 +196,7 @@
                                         <div class="card-body pt-0 p-3 text-center">
                                             <h6 class="text-center mb-0">Presión de ajuste Kg/cm <sup>2</sup></h6>
                                             <hr class="horizontal dark my-3">
-                                            <h5 class="mb-0" id="omPresionA">---------</h5>
+                                            <div id="omPresionA"></div>
                                         </div>
                                     </div>
                                 </div>
@@ -201,7 +205,7 @@
                                         <div class="card-body pt-0 p-3 text-center">
                                             <h6 class="text-center mb-0">Presión de trabajo Kg/cm <sup>2</sup></h6>
                                             <hr class="horizontal dark my-3">
-                                            <h5 class="mb-0" id="omPresionT">---------</h5>
+                                            <div id="omPresionT"></div>
                                         </div>
                                     </div>
                                 </div>
@@ -231,7 +235,7 @@
 
             <div class="col-xl-12 mt-4">
                 <div class="row">
-                    <div class="col-md-3 col-3">
+                    <div class="col-md-3 col-3" id="imgData1">
                         <div class="card">
                             <div class="card-header mx-4 p-3 text-center">
                             </div>
@@ -241,7 +245,7 @@
                         </div>
                     </div>
 
-                    <div class="col-md-3 col-3">
+                    <div class="col-md-3 col-3" id="dataBomba1">
                         <div class="card">
                             <div class="card-header mx-4 p-3 text-center">
                                 <h5 class="text-center mb-0">Bomba 1</h5>
@@ -260,7 +264,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-3 col-3">
+                    <div class="col-md-3 col-3" id="imgData2">
                         <div class="card">
                             <div class="card-header mx-4 p-3 text-center">
                             </div>
@@ -270,7 +274,7 @@
                         </div>
                     </div>
 
-                    <div class="col-md-3 col-3">
+                    <div class="col-md-3 col-3" id="dataBomba2">
                         <div class="card">
                             <div class="card-header mx-4 p-3 text-center">
                                 <h5 class="text-center mb-0">Bomba 2 </h5>
@@ -292,7 +296,7 @@
                 </div>
             </div>
 
-            <div class="col-xl-12 mt-4">
+            <div class="col-xl-12 mt-4" id="imgData3">
                 <div class="row">
                     <div class="col-md-3 col-3">
                         <div class="card">
@@ -304,7 +308,7 @@
                         </div>
                     </div>
 
-                    <div class="col-md-3 col-3">
+                    <div class="col-md-3 col-3" id="dataBomba3">
                         <div class="card">
                             <div class="card-header mx-4 p-3 text-center">
                                 <h5 class="text-center mb-0">Bomba 3</h5>
@@ -323,7 +327,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-3 col-3">
+                    <div class="col-md-3 col-3" id="imgData4">
                         <div class="card">
                             <div class="card-header mx-4 p-3 text-center">
                             </div>
@@ -333,7 +337,7 @@
                         </div>
                     </div>
 
-                    <div class="col-md-3 col-3">
+                    <div class="col-md-3 col-3" id="dataBomba4">
                         <div class="card">
                             <div class="card-header mx-4 p-3 text-center">
                                 <h5 class="text-center mb-0">Bomba 4 </h5>
@@ -355,7 +359,7 @@
                 </div>
             </div>
 
-            <div class="col-xl-12 mt-4">
+            <div class="col-xl-12 mt-4" id="imgData5">
                 <div class="row">
                     <div class="col-md-3 col-3">
                         <div class="card">
@@ -367,7 +371,7 @@
                         </div>
                     </div>
 
-                    <div class="col-md-3 col-3">
+                    <div class="col-md-3 col-3" id="dataBomba5">
                         <div class="card">
                             <div class="card-header mx-4 p-3 text-center">
                                 <h5 class="text-center mb-0">Bomba 5</h5>
@@ -386,7 +390,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-3 col-3">
+                    <div class="col-md-3 col-3" id="imgData6">
                         <div class="card">
                             <div class="card-header mx-4 p-3 text-center">
                             </div>
@@ -396,7 +400,7 @@
                         </div>
                     </div>
 
-                    <div class="col-md-3 col-3">
+                    <div class="col-md-3 col-3" id="dataBomba6">
                         <div class="card">
                             <div class="card-header mx-4 p-3 text-center">
                                 <h5 class="text-center mb-0">Bomba 6</h5>

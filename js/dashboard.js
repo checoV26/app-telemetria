@@ -18,7 +18,7 @@ let sendProject = () => {
     },
     success: function (response) {
       let array = response.data;
-      let listProyects = `<option value="" selected="" disabled>-----------------------------------------------------</option>`;
+      let listProyects = `<option value="" selected disabled>-----------------------------------------------------</option>`;
       array.forEach((element) => {
         listProyects += `<option value="${element.Id}">${element.Nombre_Obra}</option>`;
       });

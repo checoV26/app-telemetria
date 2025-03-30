@@ -14,8 +14,8 @@ MQTTClient.subscribe(topicListAlarmas, function (msg) {
 // Publicar un mensaje en "prueba/mensaje"
 function enviarMensaje() {
   const data = {
-    presionA: generarNumeroAleatorio(100, 120),
-    presionT: generarNumeroAleatorio(100, 120),
+    presionA: generarNumeroAleatorio(0, 7),
+    presionT: generarNumeroAleatorio(0, 7),
   };
   if (topicOperacionesPAT == "") {
     console.log("No se ha creado el tópico");
@@ -42,6 +42,17 @@ function encenderDispositivo() {
       name: "Bomba 2",
       status: true,
       id: 2,
+      data: {
+        voltaje: generarNumeroAleatorio(100, 130),
+        corriente: generarNumeroAleatorio(100, 120),
+        frecuencia: generarNumeroAleatorio(60, 80),
+        fecha: "21/03/2025",
+      },
+    },
+    {
+      name: "Bomba 3",
+      status: true,
+      id: 3,
       data: {
         voltaje: generarNumeroAleatorio(100, 130),
         corriente: generarNumeroAleatorio(100, 120),

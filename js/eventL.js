@@ -3,11 +3,8 @@ $(document).ready(function () {
   if (nameProyect != "") {
     $("#nameProyect").text(nameProyect);
   }
-  setInterval(() => {
-    getDataTable();
-  }, 1000);
 });
-
+/*
 let getDataTable = () => {
   var data = "";
   for (let i = 1; i < 10; i++) {
@@ -23,7 +20,7 @@ let getDataTable = () => {
     data += "</tr>";
   }
   $("#tableData tbody").html(data); // Agrega la fila al tbody
-};
+};*/
 
 // Suscribirse a las alarmas
 MQTTClient.subscribe(topicAlarmas, function (msg) {
