@@ -25,9 +25,10 @@ let sendData = (e) => {
     contentType: "application/json", // Indicar que estamos enviando JSON
     processData: false,
     success: function (response) {
-      console.log(response);
       localStorage.setItem("client", response.idCliente);
       localStorage.setItem("token", response.token);
+      localStorage.setItem("perfil", response.perfil);
+      localStorage.setItem("usuario", response.idUsuario);
       window.location.href = "../pages/dashboard.html";
       $("#spinner").hide();
     },

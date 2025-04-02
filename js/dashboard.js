@@ -32,7 +32,6 @@ let sendProject = () => {
     error: function (err) {
       // Si el token ha expirado (401 Unauthorized), redirigir al login
       if (err.status === 401) {
-        alert("Tu sesión ha expirado. Inicia sesión nuevamente.");
         localStorage.removeItem("token"); // Eliminar el token almacenado
         window.location.href = "../pages/sign-in.html"; // Redirigir a la página de login
       } else if (err.status == 404) {

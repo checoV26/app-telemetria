@@ -1,0 +1,7 @@
+CREATE TABLE logsClient (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    Id_User INT NOT NULL,
+    descripcion VARCHAR(255) NOT NULL,
+    fecha DATETIME DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT logs_user FOREIGN KEY (Id_User) REFERENCES userCliente(Id)
+);

@@ -1,6 +1,6 @@
 {
   "name": "telemetria-asb",
-  "version": "1.0.4",
+  "version": "1.1.1",
   "description": "Aplicación de telemetría con Electron.js",
   "main": "main.js",
   "scripts": {

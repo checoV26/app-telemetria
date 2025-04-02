@@ -2,6 +2,8 @@ var topicOperacionesPAT = "";
 var topicOperacionesBombas = "";
 var topicAlarmas = "";
 var topicListAlarmas = "";
+var topicApagarAcction = "";
+//var server = "http://localhost:3000/api/";
 var server = "http://asbombeo.ddns.net:3000/api/";
 const dataN = "---------";
 
@@ -24,6 +26,7 @@ function createTopic() {
   topicOperacionesBombas = `asb/telemetia/client${client}/proyect${proyect}/operaciones/bombas/data`;
   topicListAlarmas = `asb/telemetia/client${client}/proyect${proyect}/list/alarmas/data`;
   topicAlarmas = `asb/telemetia/client${client}/proyect${proyect}/alarmas/data`;
+  topicApagarAcction = `asb/telemetia/client${client}/proyect${proyect}/bomba/data/acction`;
 }
 
 function mostrarNotificacion(mensaje, tiempo) {
@@ -48,4 +51,5 @@ window.topicOperacionesPAT = topicOperacionesPAT;
 window.topicOperacionesBombas = topicOperacionesBombas;
 window.topicListAlarmas = topicListAlarmas;
 window.topicAlarmas = topicAlarmas;
+window.topicApagarAcction = topicApagarAcction;
 window.server = server;
