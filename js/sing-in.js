@@ -1,4 +1,5 @@
 $(document).ready(function () {
+  localStorage.clear();
   $("#form-singIn").on("submit", function (e) {
     sendData(e);
   });

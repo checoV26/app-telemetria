@@ -31,6 +31,7 @@ $(document).ready(function () {
   MQTTClient.subscribe(topicOperacionesPAT, function (msg) {
     try {
       let data = JSON.parse(msg);
+      console.log(data);
       /*
       $("#omPresionA").text(data.presionA);
       $("#omPresionT").text(data.presionT);
@@ -47,12 +48,14 @@ $(document).ready(function () {
   MQTTClient.subscribe(topicOperacionesBombas, function (msg) {
     try {
       let data = JSON.parse(msg);
+      console.log(data);
       var num = 1;
 
-      /*for (let i = 6; i > data.length; i--) {
+      for (let i = 6; i > data.length; i--) {
+        console.log("data");
         $(`#dataBomba${i}`).prop("hidden", true);
         $(`#imgData${i}`).prop("hidden", true);
-      }*/
+      }
 
       data.forEach((element) => {
         var nameB = `statusB${num}`;
@@ -60,6 +63,8 @@ $(document).ready(function () {
         var corriente = `omCorriente${num}`;
         var frecuencia = `omFrecuencia${num}`;
         var checkB = `checkB${num}`;
+        // que si viene como false oculte
+
         if (element.status) {
           $(`#${nameB}`).removeClass("rojo");
           $(`#${nameB}`).addClass("verde");

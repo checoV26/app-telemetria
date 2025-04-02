@@ -23,7 +23,7 @@ const MQTTClient = (function () {
   // Manejo de mensajes recibidos
   client.on("message", function (topic, message) {
     const msg = message.toString();
-    //console.log(`📩 Mensaje recibido en ${topic}: ${msg}`);
+    console.log(`📩 Mensaje recibido en ${topic}: ${msg}`);
 
     // Llamar al callback si existe para el tópico
     if (subscriptions[topic]) {
@@ -33,7 +33,7 @@ const MQTTClient = (function () {
 
   // Manejo de errores
   client.on("error", function (err) {
-    //console.error("❌ Error en MQTT:", err);
+    console.error("❌ Error en MQTT:", err);
     $("#statusConecctionAsb").removeClass("verde");
     $("#statusConecctionAsb").addClass("rojo");
   });
@@ -42,7 +42,7 @@ const MQTTClient = (function () {
   function subscribe(topic, callback) {
     client.subscribe(topic, function (err) {
       if (!err) {
-        //console.log(`📡 Suscrito a: ${topic}`);
+        console.log(`📡 Suscrito a: ${topic}`);
         subscriptions[topic] = callback; // Guardar callback
       } else {
         console.error("❌ Error al suscribirse:", err);
@@ -55,9 +55,9 @@ const MQTTClient = (function () {
     //console.log(topic);
     client.publish(topic, message, function (err) {
       if (err) {
-        //console.error("❌ Error al publicar:", err);
+        console.error("❌ Error al publicar:", err);
       } else {
-        //console.log(`📤 Mensaje enviado a ${topic}: ${message}`);
+        console.log(`📤 Mensaje enviado a ${topic}: ${message}`);
       }
     });
   }

@@ -5,6 +5,7 @@ $(document).ready(function () {
 let sendProject = () => {
   let id = localStorage.getItem("client");
   let token = localStorage.getItem("token");
+  let listProyects = `<option value="" selected disabled>-----------------------------------------------------</option>`;
   if (id == null || id == "") {
     window.location.href = "../pages/sign-in.html";
     return;
@@ -18,7 +19,6 @@ let sendProject = () => {
     },
     success: function (response) {
       let array = response.data;
-      let listProyects = `<option value="" selected disabled>-----------------------------------------------------</option>`;
       array.forEach((element) => {
         listProyects += `<option value="${element.Id}">${element.Nombre_Obra}</option>`;
       });
@@ -30,13 +30,13 @@ let sendProject = () => {
       }
     },
     error: function (err) {
-      console.log("Error:", err);
-
       // Si el token ha expirado (401 Unauthorized), redirigir al login
       if (err.status === 401) {
         alert("Tu sesión ha expirado. Inicia sesión nuevamente.");
         localStorage.removeItem("token"); // Eliminar el token almacenado
         window.location.href = "../pages/sign-in.html"; // Redirigir a la página de login
+      } else if (err.status == 404) {
+        $("#listProyect").html(listProyects);
       }
     },
   });
@@ -116,7 +116,7 @@ $("#al").click(function () {
 });
 $("#be").click(function () {
   let idProyect = $("#listProyect").val();
-  if (idProyect == "" && idProyect == null) {
+  if (idProyect == "" || idProyect == null) {
     Swal.fire({
       title: "Error!",
       text: "Selecciona un proyecto",
