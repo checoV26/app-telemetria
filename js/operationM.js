@@ -31,7 +31,6 @@ $(document).ready(function () {
   MQTTClient.subscribe(topicOperacionesPAT, function (msg) {
     try {
       let data = JSON.parse(msg);
-      console.log(data);
       /*
       $("#omPresionA").text(data.presionA);
       $("#omPresionT").text(data.presionT);
@@ -48,7 +47,6 @@ $(document).ready(function () {
   MQTTClient.subscribe(topicOperacionesBombas, function (msg) {
     try {
       let data = JSON.parse(msg);
-      console.log(data);
       var num = 1;
 
       for (let i = 6; i > data.length; i--) {
