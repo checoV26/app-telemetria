@@ -14,13 +14,13 @@
     "releaseType": "release"
   },
   "build": {
-    "appId": "com.miempresa.telemetria",
+    "appId": "com.asb.telemetria",
     "productName": "Telemetria-ASB",
     "directories": {
       "output": "dist"
     },
     "win": {
-      "icon": "assets/icon.ico",
+      "icon": "./assets/logo.ico",
       "target": "nsis"
     }
   },
